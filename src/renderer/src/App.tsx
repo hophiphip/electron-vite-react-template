@@ -9,7 +9,7 @@ const App = () => {
     return (
         <div className="App">
             <header className="App-header">
-            <   h1><strong>Platform: </strong>{platform}</h1>
+                <   h1><strong>Platform: </strong>{platform}</h1>
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>Hello Vite + React!</p>
                 <p>
