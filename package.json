@@ -1,0 +1,30 @@
+{
+  "name": "electron-vite-react-template",
+  "author": "hophiphip",
+  "description": "Electron-ViteJS-React Template",
+  "version": "0.0.0",
+  "main": "dist/main/main.cjs",
+  "scripts": {
+    "dev:renderer": "vite src/renderer",
+    "build:renderer": "cross-env NODE_ENV=production tsc -p src/renderer/tsconfig.json --noEmit && vite build src/renderer",
+    "build:preload": "cross-env NODE_ENV=production tsc -p src/preload/tsconfig.json --noEmit && vite build src/preload",
+    "build:main": "cross-env NODE_ENV=production tsc -p src/main/tsconfig.json --noEmit && vite build src/main",
+    "build": "concurrently \"npm run build:renderer\" \"npm run build:preload\" \"npm run build:main\"",
+    "dev": "cross-env NODE_ENV=development ts-node src/dev/server.ts"
+  },
+  "dependencies": {
+    "concurrently": "^7.2.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "cross-env": "^7.0.3",
+    "electron": "^19.0.3",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.9"
+  }
+}
