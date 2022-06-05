@@ -1,5 +1,17 @@
-const log = (message: string, error: any) => {
-    console.error(`${message}: ${error}`);
-};
+import log from 'electron-log';
+import { isDebug } from './utlis';
 
-export default log;
+/**
+ * Log error message.
+ * @param {string} message - Log message.
+ * @param {any} error      - Error for logging. 
+ */
+export const logErr = (message: string, error: any) => {
+    const msg = `${message}: ${error}`;
+
+    if (isDebug) {
+        console.error(msg);
+    } else {
+        log.error(msg);
+    }
+};

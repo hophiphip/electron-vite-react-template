@@ -1,6 +1,8 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
-import log from './log';
+import { logErr } from './log';
+import { registerIpc } from './ipc';
+import { pageUrl } from './page';
 
 const isSingleInstance = app.requestSingleInstanceLock();
 
@@ -23,34 +25,29 @@ const createWindow = async (): Promise<BrowserWindow> => {
         browserWindow?.show();
     });
 
-    const pageUrl = import.meta.env.DEV
-        ? 'http://localhost:3000'
-        : new URL('../renderer/index.html', `file://${__dirname}`).toString();
-    
     await browserWindow.loadURL(pageUrl);
 
     return browserWindow;
 };
 
-app.on('second-instance', () => {
-    createWindow().catch((err) => {
-        log('Error while trying to prevent second-instance Electron event', err);
-    });
-});
-
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-
-app.on('activate', () => {
-    createWindow().catch((err) => {
-        log('Error while trying to activate Electron event', err);
-    });
-});
-
-
 app.whenReady()
-    .then(createWindow)
-    .catch((err) => log('Failed to create window', err));
+    .then(() => {
+        createWindow();
+        registerIpc();
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) createWindow();
+        });
+    })
+    .catch((err) => logErr('Failed to create window', err));
+
+app.on('second-instance', () => {
+    createWindow()
+        .catch((err) => {
+            logErr('Error while trying to prevent second-instance Electron event', err);
+        });
+});
+    
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});

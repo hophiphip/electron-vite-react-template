@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './assets/logo.svg';
 import './css/App.css';
 
 const App = () => {
     const [count, setCount] = useState(0);
-    const platform = window.api.ipcRenderer.platform();
+    const [platform, setPlatform] = useState('');
+
+    useEffect(() => {
+        window.api.ipcRenderer.platform()
+            .then((p) => setPlatform(p))
+            .catch((err) => console.error(err));
+    }, [platform]);
 
     return (
         <div className="App">

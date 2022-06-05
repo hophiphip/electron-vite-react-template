@@ -17,7 +17,9 @@ export default defineConfig({
             input: join(__dirname, 'index.html'),
             
             // Exclude node internal modules from build output.
-            external: [...builtinModules.flatMap((p) => [p, `node:${p}`])],
+            external: [
+                ...builtinModules.flatMap((p) => [p, `node:${p}`])
+            ],
         }
     }
 });
