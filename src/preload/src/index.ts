@@ -1,8 +1,8 @@
-import { contextBridge, shell } from 'electron';
+import { contextBridge } from 'electron';
 import type { ContextBridgeApi } from './types';
 
 const contextBridgeApi: ContextBridgeApi = {
-    openUrl: (url: string) => shell.openExternal(url),
+    platform: () => process.platform,
 };
 
 contextBridge.exposeInMainWorld('api', {

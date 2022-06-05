@@ -6,8 +6,8 @@ import { spawn } from 'child_process';
 
 // Shared config across multiple build watchers.
 const sharedConfig: InlineConfig = {
-  mode: 'development',
-  build: { watch: {} },
+    mode: 'development',
+    build: { watch: {} },
 };
 
 /**
@@ -15,53 +15,53 @@ const sharedConfig: InlineConfig = {
  * edited.
  */
 const getWatcher = (name: string, configFilePath: string, writeBundle: any) =>
-  build({
-    ...sharedConfig,
-    configFile: configFilePath,
-    plugins: [{ name, writeBundle }],
-  });
+    build({
+        ...sharedConfig,
+        configFile: configFilePath,
+        plugins: [{ name, writeBundle }],
+    });
 
 /**
  * Setup a watcher for the preload src.
  */
 const setupPreloadWatcher = async (viteServer: ViteDevServer) =>
-  getWatcher('reload-app-on-preload-src-change', 'src/preload/vite.config.ts', () => {
+    getWatcher('reload-app-on-preload-src-change', 'src/preload/vite.config.ts', () => {
     // Send a "full-reload" page event using Vite WebSocket server.
-    viteServer.ws.send({ type: 'full-reload' });
-  });
+        viteServer.ws.send({ type: 'full-reload' });
+    });
 
 /**
  * Setup the `main` watcher.
  */
 const setupMainWatcher = async () => {
-  const logger = createLogger('info', { prefix: '[main]' })
-  let spawnProcess: ChildProcessWithoutNullStreams | null = null;
+    const logger = createLogger('info', { prefix: '[main]' });
+    let spawnProcess: ChildProcessWithoutNullStreams | null = null;
 
-  return getWatcher('reload-app-on-main-src-change', 'src/main/vite.config.ts', () => {
-    if (spawnProcess !== null) {
-      spawnProcess.off('exit', () => process.exit(0));
-      spawnProcess.kill('SIGINT');
-      spawnProcess = null;
-    }
+    return getWatcher('reload-app-on-main-src-change', 'src/main/vite.config.ts', () => {
+        if (spawnProcess !== null) {
+            spawnProcess.off('exit', () => process.exit(0));
+            spawnProcess.kill('SIGINT');
+            spawnProcess = null;
+        }
 
-    // Restart Electron process when main src is edited and recompiled.
-    spawnProcess = spawn(String(electronPath), ['.']);
-  });
+        // Restart Electron process when main src is edited and recompiled.
+        spawnProcess = spawn(String(electronPath), ['.']);
+    });
 };
 
-;(async () => {
-  try {
-    const rendererServer = await createServer({
-      ...sharedConfig,
-      configFile: 'src/renderer/vite.config.ts',
-    });
+(async () => {
+    try {
+        const rendererServer = await createServer({
+            ...sharedConfig,
+            configFile: 'src/renderer/vite.config.ts',
+        });
 
-    await rendererServer.listen()
-    rendererServer.printUrls();
+        await rendererServer.listen();
+        rendererServer.printUrls();
 
-    await setupPreloadWatcher(rendererServer);
-    await setupMainWatcher();
-  } catch (err) {
-    console.error(err);
-  }
+        await setupPreloadWatcher(rendererServer);
+        await setupMainWatcher();
+    } catch (err) {
+        console.error(err);
+    }
 })().catch((err) => console.error(err));

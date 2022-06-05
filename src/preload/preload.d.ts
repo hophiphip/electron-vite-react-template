@@ -1,4 +1,4 @@
-import type { ContextBridgeApi } from "./src/types";
+import type { ContextBridgeApi } from './src/types';
 
 declare global {
     interface Window {
@@ -8,4 +8,4 @@ declare global {
     }
 }
 
-export {};
+export { };

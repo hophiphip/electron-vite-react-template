@@ -16,6 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx"],
+  "include": ["./**/*.ts", "./**/*.d.ts", "./**/*.tsx", "../preload/preload.d.ts"],
   "references": [{ "path": "../../tsconfig.node.json" }]
 }
