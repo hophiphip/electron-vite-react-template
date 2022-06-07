@@ -12,6 +12,7 @@ if (!isSingleInstance) {
 }
 
 const createWindow = async (): Promise<BrowserWindow> => {
+    const pageUrl = import.meta.env.DEV ? 'http://localhost:3000' : new URL('../renderer/index.html', `file://${__dirname}`).toString();
     const browserWindow = new BrowserWindow({
         show: false,
         width: 1024,
