@@ -1,5 +1,4 @@
 import log from 'electron-log';
-import { isDebug } from './utlis';
 
 /**
  * Log error message.
@@ -9,7 +8,7 @@ import { isDebug } from './utlis';
 export const logErr = (message: string, error: any) => {
     const msg = `${message}: ${error}`;
 
-    if (isDebug) {
+    if (import.meta.env.DEV) {
         console.error(msg);
     } else {
         log.error(msg);

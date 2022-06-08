@@ -2,9 +2,12 @@ import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
 import { logErr } from './log';
 import { registerIpc } from './ipc';
-import { pageUrl } from './page';
 
 const isSingleInstance = app.requestSingleInstanceLock();
+const isDebug = process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+
+console.log(isDebug);
+console.log(import.meta.env.DEV);
 
 if (!isSingleInstance) {
     app.quit();

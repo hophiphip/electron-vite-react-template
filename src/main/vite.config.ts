@@ -10,13 +10,14 @@ export default defineConfig({
         outDir: '../../dist/main',
         emptyOutDir: true,
         target: 'node14',
+        minify: process.env.NODE_ENV === 'production',
         sourcemap: true,
 
         // Build main in "lib" mode of Vite.
         lib: {
             // Define the entry-point.
             entry: './src/main.ts',
-            // Define the build format, Electron support CJS.
+            // Define the build format, Electron supports CJS.
             formats: ['cjs'],
         },
 

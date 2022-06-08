@@ -1,11 +1,12 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Ipc } from './channels';
+import { ContextBridgeApi } from '../../types/bridge';
+import { Channels } from '../../types/channels';
 
 const contextBridgeApi: ContextBridgeApi = {
     platform: () => {
-        ipcRenderer.send(Ipc.platform);
+        ipcRenderer.send(Channels.Platform);
         return new Promise((resolve) => {
-            ipcRenderer.once(Ipc.platformSuccess, (_, data: string) => {
+            ipcRenderer.once(Channels.PlatformSuccess, (_, data: string) => {
                 resolve(data);
             });
         });

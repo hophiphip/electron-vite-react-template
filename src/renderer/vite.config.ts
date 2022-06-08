@@ -7,6 +7,7 @@ export default defineConfig({
     plugins: [react()],
     root: __dirname,
     base: './',
+    mode: process.env.NODE_ENV,
 
     build: {
         sourcemap: true,

@@ -26,7 +26,7 @@ const getWatcher = (name: string, configFilePath: string, writeBundle: any) =>
  */
 const setupPreloadWatcher = async (viteServer: ViteDevServer) =>
     getWatcher('reload-app-on-preload-src-change', 'src/preload/vite.config.ts', () => {
-    // Send a "full-reload" page event using Vite WebSocket server.
+        // Send a "full-reload" page event using Vite WebSocket server.
         viteServer.ws.send({ type: 'full-reload' });
     });
 

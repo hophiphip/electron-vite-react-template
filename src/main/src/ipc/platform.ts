@@ -1,8 +1,8 @@
-import { ipcMain } from "electron";
-import { Ipc } from '../../../preload/src/channels';
+import { ipcMain } from 'electron';
+import { Channels } from '../../../types/channels';
 
 export default () => {
-    ipcMain.on(Ipc.platform, async (evt, _) => {
-        evt.reply(Ipc.platformSuccess, process.platform);
+    ipcMain.on(Channels.Platform, async (evt, _) => {
+        evt.reply(Channels.PlatformSuccess, process.platform);
     });
 };
