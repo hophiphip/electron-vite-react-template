@@ -29,7 +29,11 @@ const createWindow = async (): Promise<BrowserWindow> => {
         browserWindow?.show();
     });
 
-    await browserWindow.loadURL(pageUrl);
+    if (app.isPackaged) {
+        await browserWindow.loadFile(join(__dirname, '../renderer/index.html'));
+    } else {
+        await browserWindow.loadURL(pageUrl);
+    }
 
     return browserWindow;
 };

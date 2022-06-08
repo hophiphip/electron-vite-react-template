@@ -2,14 +2,11 @@ import { defineConfig } from 'vite';
 import { builtinModules } from 'module';
 
 export default defineConfig({
-    envDir: process.cwd(),
     root: __dirname,
-    base: './',
 
     build: {
         outDir: '../../dist/main',
         emptyOutDir: true,
-        target: 'node14',
         minify: process.env.NODE_ENV === 'production',
         sourcemap: true,
 
@@ -19,6 +16,7 @@ export default defineConfig({
             entry: './src/main.ts',
             // Define the build format, Electron supports CJS.
             formats: ['cjs'],
+            fileName: () => '[name].cjs',
         },
 
         rollupOptions: {
@@ -29,7 +27,6 @@ export default defineConfig({
                 ...builtinModules.flatMap((p) => [p, `node:${p}`]),
             ],
             output: {
-                // Will be named `index.cjs`.
                 entryFileNames: '[name].cjs',
             },
         },
