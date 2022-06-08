@@ -21,6 +21,9 @@ export default defineConfig({
             external: [
                 ...builtinModules.flatMap((p) => [p, `node:${p}`])
             ],
-        }
+        },
+
+        // Disable reporting comressed chunk sizes. Might slightly improve build speed.
+        reportCompressedSize: false,
     }
 });

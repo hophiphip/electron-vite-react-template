@@ -3,6 +3,8 @@ import { builtinModules } from 'module';
 
 export default defineConfig({
     root: __dirname,
+    mode: process.env.NODE_ENV,
+    envDir: process.cwd(),
 
     build: {
         outDir: '../../dist/main',
@@ -10,13 +12,9 @@ export default defineConfig({
         minify: process.env.NODE_ENV === 'production',
         sourcemap: true,
 
-        // Build main in "lib" mode of Vite.
         lib: {
-            // Define the entry-point.
             entry: './src/main.ts',
-            // Define the build format, Electron supports CJS.
             formats: ['cjs'],
-            fileName: () => '[name].cjs',
         },
 
         rollupOptions: {
@@ -30,5 +28,8 @@ export default defineConfig({
                 entryFileNames: '[name].cjs',
             },
         },
+
+        // Disable reporting comressed chunk sizes. Might slightly improve build speed.
+        reportCompressedSize: false,
     },
 });

@@ -3,9 +3,10 @@ import { builtinModules } from 'module';
 
 export default defineConfig({
     root: __dirname,
+    mode: process.env.NODE_ENV,
+    envDir: process.cwd(),
 
     build: {
-        // Add inline sourcemap
         outDir: '../../dist/preload',
         emptyOutDir: true,
         sourcemap: 'inline',
@@ -28,5 +29,8 @@ export default defineConfig({
                 entryFileNames: '[name].cjs',
             },
         },
+
+        // Disable reporting comressed chunk sizes. Might slightly improve build speed.
+        reportCompressedSize: false,
     },
 });
